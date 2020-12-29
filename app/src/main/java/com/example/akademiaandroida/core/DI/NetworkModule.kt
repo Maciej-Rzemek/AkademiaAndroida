@@ -2,6 +2,7 @@ package com.example.akademiaandroida.core.DI
 
 import com.example.akademiaandroida.BuildConfig
 import com.example.akademiaandroida.features.data.RickAndMortyApi
+import com.example.akademiaandroida.utils.BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,7 +28,7 @@ val networkModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl("https://rickandmortyapi.com/api/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(get<OkHttpClient>())
             .build()
