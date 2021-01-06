@@ -1,6 +1,5 @@
 package com.example.akademiaandroida.features.episodes.presentation.model
 
-import com.example.akademiaandroida.features.episodes.domain.model.Episode
 
 data class Episode(
     val id: Int,
