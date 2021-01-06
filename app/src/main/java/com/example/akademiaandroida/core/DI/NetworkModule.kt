@@ -15,7 +15,7 @@ val networkModule = module {
     single<Interceptor> {
         HttpLoggingInterceptor()
             .apply {
-                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
                 else HttpLoggingInterceptor.Level.NONE
             }
     }
