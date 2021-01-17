@@ -1,7 +1,7 @@
 package com.example.akademiaandroida.core.DI
 
 import com.example.akademiaandroida.BuildConfig
-import com.example.akademiaandroida.features.data.RickAndMortyApi
+import com.example.akademiaandroida.features.data.remote.RickAndMortyApi
 import com.example.akademiaandroida.utils.BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
