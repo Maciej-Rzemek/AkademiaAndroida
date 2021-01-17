@@ -1,7 +1,7 @@
 package com.example.akademiaandroida.features.location.presentation.model
 
 
-data class Location(
+data class LocationDisplayable(
     val id: Int,
     val name: String,
     val type: String,
@@ -10,13 +10,13 @@ data class Location(
     val url: String,
     val created: String
 ) {
-    constructor(location: Location) : this(
-        id = location.id,
-        name = location.name,
-        type = location.type,
-        dimension = location.dimension,
-        residents = location.residents,
-        url = location.url,
-        created = location.created
+    constructor(locationDisplayable: LocationDisplayable) : this(
+        id = locationDisplayable.id,
+        name = locationDisplayable.name,
+        type = locationDisplayable.type,
+        dimension = locationDisplayable.dimension,
+        residents = locationDisplayable.residents,
+        url = locationDisplayable.url,
+        created = locationDisplayable.created
     )
 }

@@ -1,7 +1,7 @@
 package com.example.akademiaandroida.features.episodes.presentation.model
 
 
-data class Episode(
+data class EpisodeDisplayable(
     val id: Int,
     val name: String,
     val airDate: String,
@@ -10,12 +10,12 @@ data class Episode(
     val url: String
 ) {
 
-    constructor(episode: Episode) : this(
-        id = episode.id,
-        name = episode.name,
-        airDate = episode.airDate,
-        code = episode.code,
-        characters = episode.characters,
-        url = episode.url
+    constructor(episodeDisplayable: EpisodeDisplayable) : this(
+        id = episodeDisplayable.id,
+        name = episodeDisplayable.name,
+        airDate = episodeDisplayable.airDate,
+        code = episodeDisplayable.code,
+        characters = episodeDisplayable.characters,
+        url = episodeDisplayable.url
     )
 }

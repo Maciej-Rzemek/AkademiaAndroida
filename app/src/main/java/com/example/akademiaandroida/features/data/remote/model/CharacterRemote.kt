@@ -11,8 +11,8 @@ data class CharacterRemote(
     @SerializedName("species") val species: String,
     @SerializedName("type") val type: String,
     @SerializedName("gender") val gender: String,
-    @SerializedName("origin") val origin: Origin,
-    @SerializedName("location") val location: Location,
+    @SerializedName("origin") val characterOrigin: CharacterOriginRemote,
+    @SerializedName("location") val characterLocationRemote: CharacterLocationRemote,
     @SerializedName("image") val image: String,
     @SerializedName("episode") val episode: List<Any>,
     @SerializedName("url") val url: String,
@@ -26,8 +26,8 @@ data class CharacterRemote(
         species = species,
         type = type,
         gender = gender,
-        origin = origin,
-        location = location,
+        characterOrigin = characterOrigin,
+        characterLocationRemote = characterLocationRemote,
         image = image,
         episode = episode,
         url = url,
@@ -35,21 +35,21 @@ data class CharacterRemote(
     )
 }
 
-data class Origin(
+data class CharacterOriginRemote(
     @SerializedName("name") val name: String,
     @SerializedName("url") val url: String
 ) {
-    fun toCharacterOrigin() = Origin(
+    fun toCharacterOrigin() = CharacterOriginRemote(
         name = name,
         url = url
     )
 }
 
-data class Location(
+data class CharacterLocationRemote(
     @SerializedName("name") val name: String,
     @SerializedName("url") val url: String
 ) {
-    fun toCharacterLocation() = Location(
+    fun toCharacterLocation() = CharacterLocationRemote(
         name = name,
         url = url
     )

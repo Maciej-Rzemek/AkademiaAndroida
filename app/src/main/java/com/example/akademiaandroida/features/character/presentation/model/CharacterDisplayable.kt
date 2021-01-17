@@ -1,8 +1,10 @@
 package com.example.akademiaandroida.features.character.presentation.model
 
 import com.example.akademiaandroida.features.character.domain.model.Character
-import com.example.akademiaandroida.features.data.remote.model.Location
-import com.example.akademiaandroida.features.data.remote.model.Origin
+import com.example.akademiaandroida.features.character.domain.model.CharacterLocation
+import com.example.akademiaandroida.features.character.domain.model.CharacterOrigin
+import com.example.akademiaandroida.features.data.remote.model.CharacterLocationRemote
+import com.example.akademiaandroida.features.data.remote.model.CharacterOriginRemote
 
 data class CharacterDisplayable(
     val id: Int,
@@ -11,8 +13,8 @@ data class CharacterDisplayable(
     val species: String,
     val type: String,
     val gender: String,
-    val origin: Origin,
-    val location: Location,
+    val characterOrigin: CharacterOriginRemote,
+    val characterLocationRemote: CharacterLocationRemote,
     val image: String,
     val episode: List<Any>,
     val url: String,
@@ -25,11 +27,31 @@ data class CharacterDisplayable(
         species = character.species,
         type = character.type,
         gender = character.gender,
-        origin = character.origin,
-        location = character.location,
+        characterOrigin = character.characterOrigin,
+        characterLocationRemote = character.characterLocationRemote,
         image = character.image,
         episode = character.episode,
         url = character.url,
         created = character.created
+    )
+}
+
+data class CharacterOriginDisplayable(
+    val name: String,
+    val url: String
+) {
+    constructor(characterOrigin: CharacterOrigin) : this(
+        name = characterOrigin.name,
+        url = characterOrigin.url
+    )
+}
+
+data class CharacterLocationDisplayable(
+    val name: String,
+    val url: String
+) {
+    constructor(characterLocation: CharacterLocation) : this(
+        name = characterLocation.name,
+        url = characterLocation.url
     )
 }
