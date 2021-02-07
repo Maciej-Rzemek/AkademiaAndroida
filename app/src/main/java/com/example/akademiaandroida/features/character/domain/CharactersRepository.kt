@@ -1,4 +1,4 @@
-package com.example.akademiaandroida.features.character
+package com.example.akademiaandroida.features.character.domain
 
 import com.example.akademiaandroida.features.character.domain.model.Character
 

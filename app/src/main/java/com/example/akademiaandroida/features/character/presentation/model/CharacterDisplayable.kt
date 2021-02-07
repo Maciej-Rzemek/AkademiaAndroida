@@ -3,8 +3,6 @@ package com.example.akademiaandroida.features.character.presentation.model
 import com.example.akademiaandroida.features.character.domain.model.Character
 import com.example.akademiaandroida.features.character.domain.model.CharacterLocation
 import com.example.akademiaandroida.features.character.domain.model.CharacterOrigin
-import com.example.akademiaandroida.features.data.remote.model.CharacterLocationRemote
-import com.example.akademiaandroida.features.data.remote.model.CharacterOriginRemote
 
 data class CharacterDisplayable(
     val id: Int,
@@ -13,8 +11,8 @@ data class CharacterDisplayable(
     val species: String,
     val type: String,
     val gender: String,
-    val characterOrigin: CharacterOriginRemote,
-    val characterLocationRemote: CharacterLocationRemote,
+    val characterOrigin: CharacterOriginDisplayable,
+    val characterLocation: CharacterLocationDisplayable,
     val image: String,
     val episode: List<Any>,
     val url: String,
@@ -27,8 +25,8 @@ data class CharacterDisplayable(
         species = character.species,
         type = character.type,
         gender = character.gender,
-        characterOrigin = character.characterOrigin,
-        characterLocationRemote = character.characterLocationRemote,
+        characterOrigin = CharacterOriginDisplayable(character.characterOrigin),
+        characterLocation = CharacterLocationDisplayable(character.characterLocation),
         image = character.image,
         episode = character.episode,
         url = character.url,

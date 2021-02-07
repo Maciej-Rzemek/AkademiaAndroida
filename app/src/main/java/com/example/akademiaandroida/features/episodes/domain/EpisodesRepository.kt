@@ -1,4 +1,4 @@
-package com.example.akademiaandroida.features.episodes
+package com.example.akademiaandroida.features.episodes.domain
 
 import com.example.akademiaandroida.features.episodes.domain.model.Episode
 

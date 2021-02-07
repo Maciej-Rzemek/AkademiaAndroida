@@ -1,7 +1,6 @@
 package com.example.akademiaandroida.features.location.domain
 
 import com.example.akademiaandroida.core.base.UseCase
-import com.example.akademiaandroida.features.location.LocationsRepository
 import com.example.akademiaandroida.features.location.domain.model.Location
 
 class GetLocationsUseCase(private val locationsRepository: LocationsRepository) :
