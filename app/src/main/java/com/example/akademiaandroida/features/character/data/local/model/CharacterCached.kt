@@ -19,7 +19,7 @@ data class CharacterCached(
     @Embedded
     val characterLocationCached: CharacterLocationCached,
     val image: String,
-    val episode: List<Any>,
+    val episode: List<String>,
     val url: String,
     val created: String
 ) {
