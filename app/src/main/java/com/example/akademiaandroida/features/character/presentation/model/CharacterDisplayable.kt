@@ -14,7 +14,7 @@ data class CharacterDisplayable(
     val characterOrigin: CharacterOriginDisplayable,
     val characterLocation: CharacterLocationDisplayable,
     val image: String,
-    val episode: List<Any>,
+    val episode: List<String>,
     val url: String,
     val created: String
 ) {
