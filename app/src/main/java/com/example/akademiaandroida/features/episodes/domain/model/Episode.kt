@@ -8,4 +8,6 @@ data class Episode(
     val code: String,
     val characters: List<String>,
     val url: String
-)
+) {
+    companion object
+}
