@@ -3,6 +3,7 @@ package com.example.akademiaandroida.features.episodes.presentation
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.example.akademiaandroida.core.base.UiState
+import com.example.akademiaandroida.core.exeption.ErrorMapper
 import com.example.akademiaandroida.features.episodes.domain.GetEpisodesUseCase
 import com.example.akademiaandroida.features.episodes.domain.model.Episode
 import com.example.akademiaandroida.mock.mock
@@ -21,8 +22,9 @@ internal class EpisodeViewModelTest : ViewModelTest() {
     fun `WHEN episode liveData is observed THEN set pending state`() {
 
         //given
+        val errorMapper = mockk<ErrorMapper>(relaxed = true)
         val useCase = mockk<GetEpisodesUseCase>(relaxed = true)
-        val viewModel = EpisodeViewModel(useCase)
+        val viewModel = EpisodeViewModel(useCase, errorMapper)
 
         //when
         viewModel.episodes.observeForTesting()
@@ -34,8 +36,9 @@ internal class EpisodeViewModelTest : ViewModelTest() {
     @Test
     fun `WHEN episode liveData is observed THEN invoke use case to get episodes`() {
         //given
+        val errorMapper = mockk<ErrorMapper>(relaxed = true)
         val useCase = mockk<GetEpisodesUseCase>(relaxed = true)
-        val viewModel = EpisodeViewModel(useCase)
+        val viewModel = EpisodeViewModel(useCase, errorMapper)
 
         //when
         viewModel.episodes.observeForTesting()
@@ -47,13 +50,14 @@ internal class EpisodeViewModelTest : ViewModelTest() {
     @Test
     fun `GIVEN use case result is success WHEN episode liveData is observed THEN set idle state AND set result in liveData`() {
         //given
+        val errorMapper = mockk<ErrorMapper>(relaxed = true)
         val episodes = listOf(Episode.mock(), Episode.mock(), Episode.mock())
         val useCase = mockk<GetEpisodesUseCase> {
             every { this@mockk(any(), any(), any(), any()) } answers {
                 lastArg<(Result<List<Episode>>) -> Unit>()(Result.success(episodes))
             }
         }
-        val viewModel = EpisodeViewModel(useCase)
+        val viewModel = EpisodeViewModel(useCase, errorMapper)
 
         //when
         viewModel.episodes.observeForTesting()
@@ -71,14 +75,18 @@ internal class EpisodeViewModelTest : ViewModelTest() {
     @Test
     fun `GIVEN use case result is success WHEN episode liveData is observed THEN set idle state AND set error message in liveData`() {
         //given
+
         val throwable = Throwable("Oops... Something went wrong")
         val useCase = mockk<GetEpisodesUseCase> {
             every { this@mockk(any(), any(), any(), any()) } answers {
                 lastArg<(Result<List<Episode>>) -> Unit>()(Result.failure(throwable))
             }
         }
+        val errorMapper = mockk<ErrorMapper> {
+            every { map(any()) } returns throwable.message!!
+        }
         val observer = mockk<Observer<String>>(relaxed = true)
-        val viewModel = EpisodeViewModel(useCase)
+        val viewModel = EpisodeViewModel(useCase, errorMapper)
 
         //when
         viewModel.message.observeForever(observer)
