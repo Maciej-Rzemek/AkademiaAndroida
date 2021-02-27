@@ -3,6 +3,7 @@ package com.example.akademiaandroida.features.character.presentation
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.example.akademiaandroida.core.base.UiState
+import com.example.akademiaandroida.core.exeption.ErrorMapper
 import com.example.akademiaandroida.features.character.domain.GetCharactersUseCase
 import com.example.akademiaandroida.features.character.domain.model.Character
 import com.example.akademiaandroida.mock.mock
@@ -21,8 +22,9 @@ internal class CharacterViewModelTest : ViewModelTest() {
     fun `WHEN characters liveData is observed THEN set pending state`() {
 
         //given
+        val errorMapper = mockk<ErrorMapper>(relaxed = true)
         val useCase = mockk<GetCharactersUseCase>(relaxed = true)
-        val viewModel = CharacterViewModel(useCase)
+        val viewModel = CharacterViewModel(useCase, errorMapper)
 
         //when
         viewModel.characters.observeForTesting()
@@ -34,8 +36,9 @@ internal class CharacterViewModelTest : ViewModelTest() {
     @Test
     fun `WHEN characters liveData is observed THEN invoke use case to get characters`() {
         //given
+        val errorMapper = mockk<ErrorMapper>(relaxed = true)
         val useCase = mockk<GetCharactersUseCase>(relaxed = true)
-        val viewModel = CharacterViewModel(useCase)
+        val viewModel = CharacterViewModel(useCase, errorMapper)
 
         //when
         viewModel.characters.observeForTesting()
@@ -48,13 +51,14 @@ internal class CharacterViewModelTest : ViewModelTest() {
     fun `GIVEN use case result is success WHEN characters liveData is observed THEN set idle state AND set result in liveData`() {
 
         //given
+        val errorMapper = mockk<ErrorMapper>(relaxed = true)
         val characters = listOf(Character.mock(), Character.mock(), Character.mock())
         val useCase = mockk<GetCharactersUseCase> {
             every { this@mockk(any(), any(), any(), any()) } answers {
                 lastArg<(Result<List<Character>>) -> Unit>()(Result.success(characters))
             }
         }
-        val viewModel = CharacterViewModel(useCase)
+        val viewModel = CharacterViewModel(useCase, errorMapper)
 
         //when
         viewModel.characters.observeForTesting()
@@ -73,14 +77,18 @@ internal class CharacterViewModelTest : ViewModelTest() {
     @Test
     fun `GIVEN use case result is failure WHEN characters live data is observed THEN set idle state AND set error message in live data`() {
         //given
+
         val throwable = Throwable("Oops... Something went wrong")
         val useCase = mockk<GetCharactersUseCase> {
             every { this@mockk(any(), any(), any(), any()) } answers {
                 lastArg<(Result<List<Character>>) -> Unit>()(Result.failure(throwable))
             }
         }
+        val errorMapper = mockk<ErrorMapper> {
+            every { map(any()) } returns throwable.message!!
+        }
         val observer = mockk<Observer<String>>(relaxed = true)
-        val viewModel = CharacterViewModel(useCase)
+        val viewModel = CharacterViewModel(useCase, errorMapper)
 
         //when
         viewModel.message.observeForever(observer)
