@@ -17,6 +17,7 @@ ext {
     def junitVersion = "5.6.2"
     def mockkVersion = "1.10.0"
     def kluentVersion = "1.61"
+    def roomKaptVersion = "2.2.5"
 
     coreDependencies = [
             appCompat: "androidx.appcompat:appcompat:" + appCompatVersion,
@@ -64,7 +65,10 @@ ext {
     databaseDependencies = [
             roomRuntime: "androidx.room:room-runtime:" + roomVersion,
             roomKtx: "androidx.room:room-ktx:" + roomVersion,
-            roomCompiler: "androidx.room:room-compiler:" + roomVersion
+    ]
+
+    kaptDependencies = [
+            room: "androidx.room:room-compiler:" + roomKaptVersion
     ]
 
     testDependencies = [

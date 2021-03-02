@@ -14,12 +14,11 @@ import com.example.akademiaandroida.features.location.data.local.model.Locations
     entities = [EpisodeCached::class, LocationsCached::class, CharacterCached::class],
     version = 1
 )
+
 @TypeConverters(ListConverter::class)
 abstract class DatabaseHelper : RoomDatabase() {
 
     abstract fun episodeDao(): EpisodeDao
-
     abstract fun locationsDao(): LocationsDao
-
     abstract fun charactersDao(): CharactersDao
 }

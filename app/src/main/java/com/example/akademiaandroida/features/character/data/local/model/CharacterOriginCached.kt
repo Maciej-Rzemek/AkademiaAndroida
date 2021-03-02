@@ -4,8 +4,8 @@ import com.example.akademiaandroida.features.character.domain.model.CharacterOri
 
 
 data class CharacterOriginCached(
-    val name: String,
-    val url: String
+    val originName: String,
+    val originUrl: String
 ) {
     constructor(characterOrigin: CharacterOrigin) : this(
         characterOrigin.name,
@@ -15,8 +15,8 @@ data class CharacterOriginCached(
     companion object
 
     fun toCharacterOrigin() = CharacterOrigin(
-        name = name,
-        url = url
+        name = originName,
+        url = originUrl
     )
 
 }
