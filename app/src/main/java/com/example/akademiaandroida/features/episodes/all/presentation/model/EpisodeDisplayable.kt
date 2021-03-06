@@ -2,6 +2,7 @@ package com.example.akademiaandroida.features.episodes.all.presentation.model
 
 import android.os.Parcelable
 import com.example.akademiaandroida.features.episodes.domain.model.Episode
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -22,6 +23,9 @@ data class EpisodeDisplayable(
         characters = episode.characters,
         url = episode.url
     )
+
+    @IgnoredOnParcel
+    val fullName = "$code: $name"
 
     companion object
 }
