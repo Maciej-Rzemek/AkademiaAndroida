@@ -1,14 +1,14 @@
 package com.example.akademiaandroida.features.episodes.all.presentation
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.akademiaandroida.core.adapter.BindableAdapter
-import com.example.akademiaandroida.databinding.EpisodeItemBinding
+import com.example.akademiaandroida.R
 import com.example.akademiaandroida.features.episodes.all.presentation.model.EpisodeDisplayable
+import kotlinx.android.synthetic.main.episode_item.view.*
 
-class EpisodeAdapter : BindableAdapter<EpisodeDisplayable>,
-    RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {
+class EpisodeAdapter : RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {
 
     var listener: ((EpisodeDisplayable) -> Unit)? = null
     private val episodes by lazy {
@@ -16,43 +16,36 @@ class EpisodeAdapter : BindableAdapter<EpisodeDisplayable>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = EpisodeItemBinding.inflate(inflater, parent, false)
+        val itemView = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.episode_item, parent, false)
 
-        return EpisodeViewHolder(binding)
+        return EpisodeViewHolder(itemView)
     }
 
     override fun getItemCount(): Int = episodes.size
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
         val episode = episodes[position]
-        holder.bind(episode, listener)
+        holder.bind(episode)
     }
 
-    override fun setItems(items: List<EpisodeDisplayable>) {
-        if (items.isNotEmpty()) {
+    fun setEpisodes(episodes: List<EpisodeDisplayable>) {
+        if (episodes.isNotEmpty()) {
             this.episodes.clear()
         }
 
-        this.episodes.addAll(items)
+        this.episodes.addAll(episodes)
         notifyDataSetChanged()
     }
 
-    fun setOnEpisodeClickListener(listener: (EpisodeDisplayable) -> Unit) {
-        this.listener = listener
-    }
+    inner class EpisodeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    inner class EpisodeViewHolder(private val binding: EpisodeItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(
-            episode: EpisodeDisplayable,
-            listener: ((EpisodeDisplayable) -> Unit)?
-        ) {
-            with(binding) {
-                binding.item = episode
-                listener?.let { root.setOnClickListener { it(episode) } }
-                binding.executePendingBindings()
+        fun bind(episode: EpisodeDisplayable) {
+            with(itemView) {
+                episode_title.text = episode.name
+                episode_per_season.text = episode.code
+                listener?.let { setOnClickListener { it(episode) } }
             }
         }
     }

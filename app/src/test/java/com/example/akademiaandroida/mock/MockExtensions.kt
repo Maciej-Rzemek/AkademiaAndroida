@@ -209,14 +209,14 @@ fun CharacterOriginRemote.Companion.mock() = CharacterOriginRemote(
 
 @TestOnly
 fun CharacterLocationCached.Companion.mock() = CharacterLocationCached(
-    locationName = "name",
-    locationUrl = "url"
+    name = "name",
+    url = "url"
 )
 
 @TestOnly
 fun CharacterOriginCached.Companion.mock() = CharacterOriginCached(
-    originName = "name",
-    originUrl = "url"
+    name = "name",
+    url = "url"
 )
 
 @TestOnly

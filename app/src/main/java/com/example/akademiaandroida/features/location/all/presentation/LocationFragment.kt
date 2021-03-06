@@ -1,41 +1,49 @@
 package com.example.akademiaandroida.features.location.all.presentation
 
-import androidx.recyclerview.widget.DividerItemDecoration
-import com.example.akademiaandroida.BR
+import android.view.View
+import androidx.lifecycle.observe
 import com.example.akademiaandroida.R
 import com.example.akademiaandroida.core.base.BaseFragment
-import com.example.akademiaandroida.databinding.LocationFragmentBinding
+import kotlinx.android.synthetic.main.location_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LocationFragment : BaseFragment<LocationViewModel, LocationFragmentBinding>(
-    BR.viewModel,
-    R.layout.location_fragment
-) {
+class LocationFragment : BaseFragment<LocationViewModel>(R.layout.location_fragment) {
 
-    private val divider: DividerItemDecoration by inject()
+
     override val viewModel: LocationViewModel by viewModel()
-    private val locationAdapter: LocationAdapter by inject()
+    private val adapter: LocationAdapter by inject()
 
-    override fun initViews(binding: LocationFragmentBinding) {
-        super.initViews(binding)
-        initRecycler(binding)
+    override fun initViews() {
+        super.initViews()
+        setupRecyclerView()
     }
 
-    private fun initRecycler(binding: LocationFragmentBinding) {
-        with(binding.recyclerViewLocation) {
-            addItemDecoration(divider)
-            setHasFixedSize(true)
-            adapter = locationAdapter
+    override fun onIdleState() {
+        super.onIdleState()
+        location_progressBar.visibility = View.INVISIBLE
+    }
+
+    override fun onPendingState() {
+        super.onPendingState()
+        location_progressBar.visibility = View.VISIBLE
+    }
+
+    override fun initObservers() {
+        super.initObservers()
+        observeLocations()
+    }
+
+    private fun setupRecyclerView() {
+        recycler_view_location.adapter = adapter
+        adapter.listener = { viewModel.onLocationClick(it) }
+    }
+
+    private fun observeLocations() {
+        viewModel.locations.observe(this) {
+            adapter.setLocations(it)
         }
-        locationAdapter.setOnLocationClickListener { viewModel.onLocationClick(it) }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding?.recyclerViewLocation?.let {
-            it.adapter = null
-            it.layoutManager = null
-        }
-    }
+
 }

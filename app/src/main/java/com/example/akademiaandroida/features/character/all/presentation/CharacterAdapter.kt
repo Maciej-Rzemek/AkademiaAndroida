@@ -1,14 +1,15 @@
 package com.example.akademiaandroida.features.character.all.presentation
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.akademiaandroida.core.adapter.BindableAdapter
-import com.example.akademiaandroida.databinding.CharacterItemBinding
+import com.bumptech.glide.Glide
+import com.example.akademiaandroida.R
 import com.example.akademiaandroida.features.character.all.presentation.model.CharacterDisplayable
+import kotlinx.android.synthetic.main.character_item.view.*
 
-class CharacterAdapter : BindableAdapter<CharacterDisplayable>,
-    RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
+class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
 
     var listener: ((CharacterDisplayable) -> Unit)? = null
     val characters by lazy {
@@ -19,44 +20,36 @@ class CharacterAdapter : BindableAdapter<CharacterDisplayable>,
         parent: ViewGroup,
         viewType: Int
     ): CharacterAdapter.CharacterViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = CharacterItemBinding.inflate(inflater, parent, false)
+        val itemView = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.character_item, parent, false)
 
-        return CharacterViewHolder(binding)
+        return CharacterViewHolder(itemView)
     }
 
     override fun getItemCount(): Int = characters.size
 
     override fun onBindViewHolder(holder: CharacterAdapter.CharacterViewHolder, position: Int) {
         val character = characters[position]
-        holder.bind(character, listener)
+        holder.bind(character)
     }
 
-    override fun setItems(items: List<CharacterDisplayable>) {
-        if (items.isNotEmpty()) {
+    fun setCharacters(characters: List<CharacterDisplayable>) {
+        if (characters.isNotEmpty()) {
             this.characters.clear()
         }
 
-        this.characters.addAll(items)
+        this.characters.addAll(characters)
         notifyDataSetChanged()
     }
 
+    inner class CharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun setOnCharacterClickListener(listener: (CharacterDisplayable) -> Unit) {
-        this.listener = listener
-    }
-
-    inner class CharacterViewHolder(private val binding: CharacterItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(
-            character: CharacterDisplayable,
-            listener: ((CharacterDisplayable) -> Unit)?
-        ) {
-            with(binding) {
-                binding.item = character
-                listener?.let { root.setOnClickListener { it(character) } }
-                binding.executePendingBindings()
+        fun bind(character: CharacterDisplayable) {
+            with(itemView) {
+                Glide.with(this).load(character.image).into(character_imageview)
+                character_name.text = character.name
+                listener?.let { setOnClickListener { it(character) } }
             }
         }
     }

@@ -1,43 +1,32 @@
 package com.example.akademiaandroida.features.episodes.all.presentation
 
+import android.view.View
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.DividerItemDecoration
-import com.example.akademiaandroida.BR
 import com.example.akademiaandroida.R
 import com.example.akademiaandroida.core.base.BaseFragment
-import com.example.akademiaandroida.databinding.FragmentEpisodeBinding
+import kotlinx.android.synthetic.main.fragment_episode.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class EpisodeFragment : BaseFragment<EpisodeViewModel, FragmentEpisodeBinding>(
-    BR.viewModel, R.layout.fragment_episode
-) {
+class EpisodeFragment : BaseFragment<EpisodeViewModel>(R.layout.fragment_episode) {
 
     override val viewModel: EpisodeViewModel by viewModel()
-    private val episodeAdapter: EpisodeAdapter by inject()
-    private val divider: DividerItemDecoration by inject()
+    private val adapter: EpisodeAdapter by inject()
 
-    override fun initViews(binding: FragmentEpisodeBinding) {
-        super.initViews(binding)
-        initRecycler(binding)
+    override fun initViews() {
+        super.initViews()
+        setupRecyclerView()
     }
 
-    override fun onDestroyView() {
-        binding?.recyclerViewEpisodes?.let {
-            it.layoutManager = null
-            it.adapter = null
-        }
-        super.onDestroyView()
+    override fun onIdleState() {
+        super.onIdleState()
+        episode_progressBar.visibility = View.INVISIBLE
     }
 
-    private fun initRecycler(binding: FragmentEpisodeBinding) {
-        with(binding.recyclerViewEpisodes) {
-            addItemDecoration(divider)
-            setHasFixedSize(true)
-            adapter = episodeAdapter
-        }
-        episodeAdapter.setOnEpisodeClickListener { viewModel.onEpisodeClick(it) }
+    override fun onPendingState() {
+        super.onPendingState()
+        episode_progressBar.visibility = View.VISIBLE
     }
 
     override fun initObservers() {
@@ -45,9 +34,16 @@ class EpisodeFragment : BaseFragment<EpisodeViewModel, FragmentEpisodeBinding>(
         observeEpisodes()
     }
 
+    private fun setupRecyclerView() {
+        recycler_view_episodes.adapter = adapter
+        adapter.listener = { viewModel.onEpisodeClick(it) }
+    }
+
     private fun observeEpisodes() {
         viewModel.episodes.observe(this) {
-            episodeAdapter.setItems(it)
+            adapter.setEpisodes(it)
         }
     }
+
+
 }
