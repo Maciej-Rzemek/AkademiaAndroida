@@ -33,11 +33,16 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.2"
 
     //core dependencies
@@ -64,6 +69,10 @@ dependencies {
     // Database dependencies
     implementation databaseDependencies.values()
 
+    // Room Kapt
+    kapt kaptDependencies.values()
+
     // Test dependencies
     testImplementation testDependencies.values()
+
 }

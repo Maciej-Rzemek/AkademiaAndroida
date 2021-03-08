@@ -1,7 +1,7 @@
 package com.example.akademiaandroida.core.app
 
 import android.app.Application
-import com.example.akademiaandroida.core.DI.koinInjector
+import com.example.akademiaandroida.core.di.koinInjector
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

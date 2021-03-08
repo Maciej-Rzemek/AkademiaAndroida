@@ -14,5 +14,4 @@ interface CharactersDao {
 
     @Query("SELECT * FROM CharacterCached")
     suspend fun getCharacters(): List<CharacterCached>
-
 }

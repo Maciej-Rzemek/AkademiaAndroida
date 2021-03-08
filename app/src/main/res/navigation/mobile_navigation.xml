@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/characters_screen">
+
+    <fragment
+        android:id="@+id/characters_screen"
+        android:name="com.example.akademiaandroida.features.character.all.presentation.CharacterFragment"
+        android:label="@string/title_characters"
+        tools:layout="@layout/character_fragment">
+        <action
+            android:id="@+id/action_navigate_from_character_screen_to_character_details_screen"
+            app:destination="@id/character_details_screen"
+            app:popUpTo="@id/characters_screen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/locations_screen"
+        android:name="com.example.akademiaandroida.features.location.all.presentation.LocationFragment"
+        android:label="@string/title_locations"
+        tools:layout="@layout/location_fragment">
+        <action
+            android:id="@+id/action_navigate_from_locations_screen_to_locations_details_screen"
+            app:destination="@id/location_details_screen"
+            app:popUpTo="@id/characters_screen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/episodes_screen"
+        android:name="com.example.akademiaandroida.features.episodes.all.presentation.EpisodeFragment"
+        android:label="@string/title_episodes"
+        tools:layout="@layout/fragment_episode">
+        <action
+            android:id="@+id/action_navigate_from_episodes_screen_to_episode_details_screen"
+            app:destination="@id/episode_details_screen"
+            app:popUpTo="@id/episodes_screen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/episode_details_screen"
+        android:name="com.example.akademiaandroida.features.episodes.details.presentation.EpisodeDetailsFragment"
+        android:label="@string/fragment_episode_details"
+        tools:layout="@layout/fragment_episode_details" />
+    <fragment
+        android:id="@+id/character_details_screen"
+        android:name="com.example.akademiaandroida.features.character.details.presentation.CharacterDetailsFragment"
+        android:label="CharacterDetailsFragment"
+        tools:layout="@layout/fragment_character_details" />
+    <fragment
+        android:id="@+id/location_details_screen"
+        android:name="com.example.akademiaandroida.features.location.details.presentation.LocationDetailsFragment"
+        android:label="LocationDetailsFragment"
+        tools:layout="@layout/fragment_location_details" />
+</navigation>

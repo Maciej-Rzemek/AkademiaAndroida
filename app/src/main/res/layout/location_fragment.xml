@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.akademiaandroida.features.location.all.presentation.LocationViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".features.location.all.presentation.LocationFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:items="@{viewModel.locations}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <ProgressBar
+            android:id="@+id/location_progressBar"
+            style="?android:attr/progressBarStyle"
+            app:showOnPendingState="@{viewModel.uiState}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+</layout>

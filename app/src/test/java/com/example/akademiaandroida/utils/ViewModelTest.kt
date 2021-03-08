@@ -15,6 +15,4 @@ open class ViewModelTest {
     fun tearDown() {
         ArchTaskExecutor.getInstance().setDelegate(null)
     }
-
-
 }
